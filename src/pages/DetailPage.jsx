@@ -4,21 +4,20 @@ import TalkDetail from '../components/TalkDetail';
 import TalkItem from '../components/TalkItem';
 import TalkReplyInput from '../components/TalkReplyInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncReceiveTalkDetail, asyncToogleLikeTalkDetail } from '../states/talkDetail/action.js';
+import {
+  asyncReceiveTalkDetail,
+  asyncToogleLikeTalkDetail,
+} from '../states/talkDetail/action.js';
 import { asyncAddTalk } from '../states/talks/action.js';
 
 function DetailPage() {
   const { id } = useParams();
-  const {
-    talkDetail = null,
-    authUser,
-  } = useSelector((states) => states); // @TODO: get talkDetail and authUser state from store
+  const { talkDetail = null, authUser } = useSelector((states) => states); // @TODO: get talkDetail and authUser state from store
   const dispatch = useDispatch(); // @TODO: get dispatch function from store
 
   useEffect(() => {
     // @TODO: dispatch async action to get talk detail by id
     dispatch(asyncReceiveTalkDetail(id));
-
   }, [id, dispatch]);
 
   const onLikeTalk = () => {
@@ -37,15 +36,17 @@ function DetailPage() {
 
   return (
     <section className="detail-page">
-      {
-        talkDetail.parent && (
-          <div className="detail-page__parent">
-            <h3>Replying To</h3>
-            <TalkItem {...talkDetail.parent} authUser={authUser.id} />
-          </div>
-        )
-      }
-      <TalkDetail {...talkDetail} authUser={authUser.id} likeTalk={onLikeTalk} />
+      {talkDetail.parent && (
+        <div className="detail-page__parent">
+          <h3>Replying To</h3>
+          <TalkItem {...talkDetail.parent} authUser={authUser.id} />
+        </div>
+      )}
+      <TalkDetail
+        {...talkDetail}
+        authUser={authUser.id}
+        likeTalk={onLikeTalk}
+      />
       <TalkReplyInput replyTalk={onReplyTalk} />
     </section>
   );
