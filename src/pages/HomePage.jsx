@@ -6,11 +6,7 @@ import { asyncPopulateUsersAndTalks } from '../states/shared/action.js';
 import { asyncAddTalk, asyncToogleLikeTalk } from '../states/talks/action.js';
 
 function HomePage() {
-  const {
-    talks = [],
-    users = [],
-    authUser,
-  } = useSelector((states) => states); // @TODO: get talks, users, and authUser state from store
+  const { talks = [], users = [], authUser } = useSelector((states) => states); // @TODO: get talks, users, and authUser state from store
 
   const dispatch = useDispatch(); // @TODO: get dispatch function from store
 
@@ -22,7 +18,6 @@ function HomePage() {
   const onAddTalk = (text) => {
     // @TODO: dispatch async action to add talk
     dispatch(asyncAddTalk({ text }));
-
   };
 
   const onLike = (id) => {
